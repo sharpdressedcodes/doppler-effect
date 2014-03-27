@@ -1,0 +1,46 @@
+
+.clear-fix {
+    clear: both;
+}
+
+.hidden {
+    display: none;
+}
+
+.responsive-canvas {
+    outline: 0;
+    max-width: 100%;
+    height: auto;
+}
+
+#label-container {
+    float: left;
+    width: 130px;
+}
+
+#text-container {
+    float: left;
+    width: 70px;
+}
+
+#slider-container {
+    float: left;
+    width: 220px;
+    margin-left: 10px;
+}
+
+#txtMain {
+    width: 60px;
+}
+
+@media (max-width: 445px) {
+    #slider-container {
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 446px) {
+    #slider-container {
+        margin-top: 0;
+    }
+}
