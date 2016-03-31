@@ -1,3 +1,20 @@
+/**
+ *
+ *  Greg Kappatos
+ *  DopplerEffect.js
+ *
+ *  This will inject a jQueryUI slider into the sliderSelector element.
+ *
+ *  Depends:
+ *  jQuery,
+ *  jQueryUI
+ *  An image supplied through the data-src attribute on the canvas element.
+ **
+ *  Usage:
+ *  <canvas id="canvas" width="420" height="420" data-src="..."></canvas>
+ *  var dopplerEffect = new DopplerEffect('#canvas', '#textbox', '#slider');
+ */
+
 'use strict';
 
 function DopplerEffect(canvasSelector, textBoxSelector, sliderSelector){
@@ -28,20 +45,13 @@ function DopplerEffect(canvasSelector, textBoxSelector, sliderSelector){
 
     }
 
-    /*this.$slider.on('change', function(event){
-     var v = $(this).val();
-     v = DopplerEffect.sliderToText(v);
-     self.$textBox.val(v);
-     self.changeImage(v);
-     });*/
-
     this.$textBox.bind('paste keyup', setupDelay);
 
     this.$slider.slider({
-        min: 0,
-        max: 7,
+        min: DopplerEffect.SLIDER_MIN,
+        max: DopplerEffect.SLIDER_MAX,
         value: DopplerEffect.LOG_MAX_INDEX,
-        step: 0.2,
+        step: DopplerEffect.SLIDER_STEP,
         change: onSliderChange,
         slide: onSliderSlide
     });
@@ -67,7 +77,7 @@ function DopplerEffect(canvasSelector, textBoxSelector, sliderSelector){
 
         if (value.length === 0 || value === '-'){
             return;
-        } else if (isNaN(value) || !DopplerEffect.isInRange(value)){
+        } else if (isNaN(value) || !DopplerEffect.isInDisplayRange(value)){
             self.changeImage(self.lastValue);
             self.$textBox.val(self.lastValue);
             return;
@@ -75,13 +85,7 @@ function DopplerEffect(canvasSelector, textBoxSelector, sliderSelector){
 
         self.lastValue = value;
         self.$slider.slider('option', 'value', DopplerEffect.textToSlider(value));
-        //self.$textBox.val(DopplerEffect.textToSlider(value));
-        //self.$slider.val(DopplerEffect.textToSlider(value));
-        //self.$slider[0].value = DopplerEffect.textToSlider(value);
-        //document.getElementById('slider').value = DopplerEffect.VALUES.indexOf(DopplerEffect.textToSlider(value));
         self.changeImage(value);
-
-        console.log('ela', value, /*document.getElementById('slider').value,*/ DopplerEffect.textToSlider(value));
 
     }
 
@@ -105,33 +109,33 @@ DopplerEffect.KEYBOARD_DELAY = 350; // milliseconds
 DopplerEffect.LOG_MAX_INDEX = 4;
 DopplerEffect.BASE_10 = 10;
 DopplerEffect.COLOUR_MAX = 255;
-DopplerEffect.SLIDER_MIN = -100;
-DopplerEffect.SLIDER_MAX = 100;
-DopplerEffect.ONE_THIRD = DopplerEffect.SLIDER_MAX / 3;
+DopplerEffect.DISPLAY_MIN = -100;
+DopplerEffect.DISPLAY_MAX = 100;
+DopplerEffect.SLIDER_MIN = 0;
+DopplerEffect.SLIDER_MAX = 7;
+DopplerEffect.SLIDER_STEP = 0.2;
+DopplerEffect.ONE_THIRD = DopplerEffect.DISPLAY_MAX / 3;
 DopplerEffect.TWO_THIRDS = DopplerEffect.ONE_THIRD * 2;
 DopplerEffect.VALUES = [
-    DopplerEffect.SLIDER_MIN,
-    //-10,
-    //-1,
-    //-0.1,
-    DopplerEffect.SLIDER_MIN / DopplerEffect.BASE_10,
-    DopplerEffect.SLIDER_MIN / Math.pow(DopplerEffect.BASE_10, 2),
-    DopplerEffect.SLIDER_MIN / Math.pow(DopplerEffect.BASE_10, 3),
+    DopplerEffect.DISPLAY_MIN,
+    DopplerEffect.DISPLAY_MIN / DopplerEffect.BASE_10,              //-10
+    DopplerEffect.DISPLAY_MIN / Math.pow(DopplerEffect.BASE_10, 2), //-1
+    DopplerEffect.DISPLAY_MIN / Math.pow(DopplerEffect.BASE_10, 3), //-0.1
     DopplerEffect.INITIAL_VALUE,
     DopplerEffect.ONE_THIRD,
     DopplerEffect.TWO_THIRDS,
-    DopplerEffect.SLIDER_MAX
+    DopplerEffect.DISPLAY_MAX
 ];
 DopplerEffect.swapColour = function(value, red, green, blue, alpha){
 
     var colour = null;
 
-    if (!isNaN(value) && value > DopplerEffect.SLIDER_MIN - 1 &&
-        value < DopplerEffect.SLIDER_MAX + 1 &&
-        DopplerEffect.checkColour(red) &&
-        DopplerEffect.checkColour(green) &&
-        DopplerEffect.checkColour(blue) &&
-        DopplerEffect.checkColour(alpha)){
+    if (!isNaN(value) && value > DopplerEffect.DISPLAY_MIN - 1 &&
+        value < DopplerEffect.DISPLAY_MAX + 1 &&
+        DopplerEffect.isInColourRange(red) &&
+        DopplerEffect.isInColourRange(green) &&
+        DopplerEffect.isInColourRange(blue) &&
+        DopplerEffect.isInColourRange(alpha)){
 
         colour = {
             red: red,
@@ -166,11 +170,11 @@ DopplerEffect.swapColour = function(value, red, green, blue, alpha){
     return colour;
 
 };
-DopplerEffect.checkColour = function(value){
-    return !isNaN(value) && value > -(DopplerEffect.COLOUR_MAX + 1) && value < DopplerEffect.COLOUR_MAX + 1;
+DopplerEffect.isInColourRange = function(value){
+    return !isNaN(value) && !(value < -DopplerEffect.COLOUR_MAX || value > DopplerEffect.COLOUR_MAX);
 };
-DopplerEffect.isInRange = function(value){
-    return !isNaN(value) && !(value < DopplerEffect.SLIDER_MIN || value > DopplerEffect.SLIDER_MAX);
+DopplerEffect.isInDisplayRange = function(value){
+    return !isNaN(value) && !(value < DopplerEffect.DISPLAY_MIN || value > DopplerEffect.DISPLAY_MAX);
 };
 DopplerEffect.sliderToText = function(value){
 

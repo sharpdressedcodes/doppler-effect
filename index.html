@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <!-- In a real world scenario, the below css and js files would be bundled with grunt/gulp etc. -->
+
     <title>Doppler Effect</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
-    <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" type="text/css" media="all">
+    <link rel="stylesheet" href="vendor/ericmeyer/reset.css" type="text/css" media="all">
+    <link rel="stylesheet" href="vendor/jquery-ui/jquery-ui.css" type="text/css" media="all">
     <link rel="stylesheet" href="css/main.css" type="text/css" media="all">
 </head>
 <body>
@@ -17,6 +20,7 @@
         </section>
 
         <section id="input-container-outer">
+
             <div id="input-container">
                 <span id="label-container">
                     <label for="txt-main">Velocity (km/s)</label>
@@ -27,19 +31,16 @@
             </div>
 
             <div id="slider-container">
-                <div id="sld-main">
-                    <!--<label id="lbl-slider" for="slider"></label>
-                    <input id="slider" type="range" min="0" max="7" value="4">-->
-                </div>
+                <div id="sld-main"></div>
             </div>
+
         </section>
 
     </div>
 
-    <!-- TODO: update jQuery -->
-    <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
-    <script type="text/javascript" src="js/DopplerEffect.js"></script>
+    <script type="text/javascript" src="vendor/jquery/jquery.js"></script>
+    <script type="text/javascript" src="vendor/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="vendor/sharpdressedcodes/DopplerEffect.js"></script>
 
     <script type="text/javascript">
         (function(){
@@ -48,30 +49,7 @@
 
             $(document).ready(function(){
                 dopplerEffect = new DopplerEffect('#cvs-main', '#txt-main', '#sld-main');
-                //dopplerEffect = new DopplerEffect('#cvs-main', '#txt-main', '#slider');
             });
-
-            //addListener(window, 'load', function(){
-            //    dopplerEffect = new DopplerEffect('#cvs-main', '#txt-main', '#sld-main');
-            //});
-            //
-            //function addListener(object, event, callback, useCapture){
-            //
-            //    typeof useCapture === 'undefined' && (useCapture = false);
-            //
-            //    if (document.addEventListener){
-            //        object.addEventListener(event, callback, useCapture);
-            //    } else if (document.attachEvent){
-            //        object.attachEvent('on' + event, callback, useCapture);
-            //    } else {
-            //        var patched = object['on' + event];
-            //        object['on' + event] = function(e){
-            //            typeof patched === 'function' && patched.call(object, e);
-            //            callback.call(object, e);
-            //        };
-            //    }
-            //
-            //}
 
         })();
     </script>
