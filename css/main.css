@@ -1,46 +1,75 @@
+@charset "UTF-8";
 
-.clear-fix {
-    clear: both;
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
-.hidden {
-    display: none;
+body {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.responsive-canvas {
-    outline: 0;
-    max-width: 100%;
+.image {
     height: auto;
+    max-width: 100%;
+    width: 100%;
+}
+
+.container {
+    margin: 20px;
+}
+
+#cvs-container {
+    max-width: 640px;
+}
+
+#cvs-main {
+    display: block;
+}
+
+#input-container-outer {
+    max-width: 640px;
+}
+
+#input-container {
+    display: inline-block;
+    margin-top: 20px;
+    width: 265px;
 }
 
 #label-container {
-    float: left;
-    width: 130px;
+    display: inline-block;
+    width: 110px;
 }
 
 #text-container {
-    float: left;
-    width: 70px;
+    display: inline-block;
+    width: 150px;
 }
 
 #slider-container {
-    float: left;
-    width: 220px;
-    margin-left: 10px;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 0 9px;
+    width: calc(100% - 270px);
 }
 
-#txtMain {
-    width: 60px;
+#txt-main {
+    width: 100%;
 }
 
-@media (max-width: 445px) {
-    #slider-container {
-        margin-top: 20px;
+@media screen and (max-width: 500px){
+
+    #input-container {
+        width: 100%;
     }
-}
 
-@media (min-width: 446px) {
+    #text-container {
+        display: inline-block;
+        width: calc(100% - 115px);
+    }
+
     #slider-container {
-        margin-top: 0;
+        display: block;
+        width: 100%;
     }
 }

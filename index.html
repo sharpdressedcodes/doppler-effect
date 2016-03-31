@@ -1,32 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
     <title>Doppler Effect</title>
-
-    <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" type="text/css">
-    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/main.css" type="text/css" media="all">
 </head>
 <body>
 
-    <div id="container">
-        <canvas id="cvsMain" width="420" height="420" class="responsive-canvas" data-src="img/star-small.png"></canvas>
-        <br>
-        <div id="label-container">
-            <label for="txtMain">Velocity (km/s):</label>
-        </div>
-        <div id="text-container">
-            <input type="text" id="txtMain">
-        </div>
-        <div id="slider-container">
-            <div id="sldMain"></div>
-        </div>
-        <div class="clear-fix"></div>
+    <div class="container">
+
+        <section id="cvs-container">
+            <canvas id="cvs-main" width="420" height="420" class="image" data-src="img/star-small.png"></canvas>
+        </section>
+
+        <section id="input-container-outer">
+            <div id="input-container">
+                <span id="label-container">
+                    <label for="txt-main">Velocity (km/s)</label>
+                </span>
+                <span id="text-container">
+                    <input type="text" id="txt-main">
+                </span>
+            </div>
+
+            <div id="slider-container">
+                <div id="sld-main">
+                    <!--<label id="lbl-slider" for="slider"></label>
+                    <input id="slider" type="range" min="0" max="7" value="4">-->
+                </div>
+            </div>
+        </section>
+
     </div>
 
+    <!-- TODO: update jQuery -->
     <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/DopplerEffect.js"></script>
+
+    <script type="text/javascript">
+        (function(){
+
+            var dopplerEffect = null;
+
+            $(document).ready(function(){
+                dopplerEffect = new DopplerEffect('#cvs-main', '#txt-main', '#sld-main');
+                //dopplerEffect = new DopplerEffect('#cvs-main', '#txt-main', '#slider');
+            });
+
+            //addListener(window, 'load', function(){
+            //    dopplerEffect = new DopplerEffect('#cvs-main', '#txt-main', '#sld-main');
+            //});
+            //
+            //function addListener(object, event, callback, useCapture){
+            //
+            //    typeof useCapture === 'undefined' && (useCapture = false);
+            //
+            //    if (document.addEventListener){
+            //        object.addEventListener(event, callback, useCapture);
+            //    } else if (document.attachEvent){
+            //        object.attachEvent('on' + event, callback, useCapture);
+            //    } else {
+            //        var patched = object['on' + event];
+            //        object['on' + event] = function(e){
+            //            typeof patched === 'function' && patched.call(object, e);
+            //            callback.call(object, e);
+            //        };
+            //    }
+            //
+            //}
+
+        })();
+    </script>
 
 </body>
 </html>
